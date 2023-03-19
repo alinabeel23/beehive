@@ -4,12 +4,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
+from .forms import VideoForm
 
 
 # Create your views here.
 
 def home(request):
     return render(request, 'home.html')
+
+# Sign up function 
 
 def signup(request):
     error_message = ''
@@ -74,5 +77,12 @@ class ChannelDelete(DeleteView):
     model = Channel
     success_url = '/'
 
-
+# Adding video to the channel funcion
+def add_video(request, channel_id):
+    form = VideoForm(request.POST)
+    if form.is_valid():
+        new_video = form.save(commit=False)
+        new_video.channel_id = channel_id
+        new_video.save()
+    return redirect('detail', channel_id=channel_id)
 
