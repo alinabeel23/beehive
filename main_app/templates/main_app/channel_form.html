@@ -3,7 +3,7 @@
 {% block content %}
 
     {% if object %}
-        <h1 class="">Edit My Channel: <span>{{object.name}}</span></h1>
+        <h1 class="">Edit My Channel</h1>
     {% else %}
         <h1 class="">Create New Channel</h1>
     {% endif %} 
@@ -15,7 +15,7 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <table class="form-control">
-                        {{ form.as_table}}
+                        {{ form.as_p}}
                     </table>
                     <input class="btn btn-outline-light" type="submit" value="Submit!" style="border-radius: 4rem;">
                 </form>

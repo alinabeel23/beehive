@@ -13,10 +13,8 @@
             <h1>{{ video.title }}</h1>
             <p>{{ video.description }}</p>
             <div class="card-action">
-                {% if user.is_authenticated and user == channel.video.user %}
                 <a href="{% url 'videos_update' video.id %}">EDIT</a>
                 <a href="{% url 'videos_delete' video.id %}">DELETE</a>
-                {% endif %}
             </div>
             <div class="col-3" >
                 {% if user.is_authenticated %}

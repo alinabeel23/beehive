@@ -99,6 +99,7 @@ class VideoCreate(CreateView):
     form_class = CreateVideoForm
 
 
+
 class VideoDetail(DetailView):
     model = Video
 
@@ -188,7 +189,8 @@ class ChannelDetail(LoginRequiredMixin, DetailView):
 
 class ChannelUpdate(UpdateView):
     model = Channel
-    fields = '__all__'
+    # fields = '__all__'
+    form_class = CreateChannelForm
     
     
 class ChannelDelete(DeleteView):

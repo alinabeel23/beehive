@@ -5,49 +5,50 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-4" style="border: solid black;">
+        <div class="col-4" style="border: none; ">
                 {% load static %}
-                <img class="" width="100px" height="100px" src="{% static channel.profilephoto|cut:'main_app/static/' %}" alt="profile pic" /> 
-            <div class="">
+
+                <div class="d-flex justify-content-center" style="margin-top: 4rem;">
+                <img class="mb-3" style="border-radius: 50%;" width="200px" height="200px" src="{% static channel.profilephoto|cut:'main_app/static/' %}" alt="profile pic" /> 
+              </div>
+            <br>
+                <div class="">
                 <h4 class="name">{{ channel.name }}</h4>
                 <p class="about">{{ channel.about }}</p>
             </div>
 
+<br>
+<br>
+
 <div>
-    <div class='nav-holder'>
-        <nav class="">
-            <ul class="">
-                <li class=""><a class=""  href="{% url 'videos_create' %}">Add Video</li>
-                <li class=""><a class="" href="{% url 'channels_update' channel.id%}">Edit Channel</li>
-                <li class=""><a class="" href="{% url 'channels_delete' channel.id%}">Delete Channel</li>
-            </ul>
-        </nav>
+    <div>
+                <h6 class=""><a class=""  href="/change-password">Change Password</h6>
+                <h6 class=""><a class="" href="{% url 'channels_update' channel.id%}">Edit User</h6>
+    </div>
+    <br>
+    <div>
+                <h6 class=""><a class=""  href="{% url 'videos_create' %}">Upload Video</h6>
+                <h6 class=""><a class="" href="{% url 'channels_update' channel.id%}">Edit Channel</h6>
+                <h6 class=""><a class="" href="{% url 'channels_delete' channel.id%}">Delete Channel</h6>
     </div>
 
     <div class="channel-detail">
  
     </div>
-<div>
-    {% if user.is_authenticated %}
-    {% if is_subscribed %}
-      <form method="post" action="{% url 'unsubscribe' channel.id %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Unsubscribe</button>
-      </form>
+
+    <br>
+    <br>
+    <div class="col-3" >
+      {% if user.is_authenticated %}
+      {% csrf_token %}
+      <button id="subscribe_button" class="{% if is_subscribed %}btn btn-outline-light{% else %}btn btn-outline-light{% endif %}" onclick="toggleSubscribe();">
+        {% if is_subscribed %}Unsubscribe{% else %}Subscribe{% endif %}
+      </button>
     {% else %}
-      <form method="post" action="{% url 'subscribe' channel.id %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Subscribe</button>
-      </form>
+      <p>Please <a href="{% url 'login' %}">log in</a> to subscribe or unsubscribe.</p>
     {% endif %}
-  {% else %}
-    <p>Please <a href="{% url 'login' %}">log in</a> to subscribe or unsubscribe.</p>
-  {% endif %}
+    </div>
 
-
-
-
-</div>
     <a class="video-detail-link" href="videos_detail" >
 
     </a>
@@ -55,21 +56,76 @@
 </div>
         </div>
 
-        <div class="col-8" style="border: solid black; ">
+        <div class="col-8" style="border: none; ">
 
-            
-            {% for video in channel.video_set.all %}
-            {% load static %}
-            
-            <div style="width: 20rem; height: 11rem; border: none;">
-                <img src= {% static video.thumbnail|cut:'main_app/static/' %} class="card-img-top" alt="..." style="max-height: 100%; border-radius: 0.5rem;">
-            </div>            
-            <p class="">{{ video.title }}</p>
-                 <!-- <p class="">{{ video.uploaded_at }}</p> -->
-            {% endfor %}
+
+          <div class="container-fluid">
+              <h4 style="margin-bottom: 1rem;">Your Videos</h4>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for video in channel.video_set.all %}
+        
+                <div class="col">
+                <a href="{% url 'videos_detail' video.id %}">
+        
+        
+                    <div style="width: 20rem; height: 11rem; border: none;">
+        
+                        {% load static %}
+                        <img src= {% static video.thumbnail|cut:'main_app/static/' %} class="card-img-top" alt="..." style="max-height: 100%; border-radius: 0.5rem;">
+        
+                    </div>
+                    
+                    <div class="container">
+                        <div class="row" style="position: relative; bottom: 1.7rem; right: 0.75rem;">
+                            <div class="col">
+                                <img style="border-radius: 50%; width: 3rem; height: 3rem; position: relative; left: 1.5rem;"  src={% static video.channel.profilephoto|cut:'main_app/static/' %} alt="profile pic" /> 
+                            </div>
+                            <div class="col">
+                                <h4 style="margin-top: 0.5rem;">{{video.title}} </h4>
+                                <a href="/channels/{{ video.channel.id }}" style="margin-top: -1rem;"> {{ video.channel }} </a>
+                            </div>
+                        </div>
+                    </div>
+        
+        
+                </div>
+                {% endfor %}
+            </div>
+        
+            {% comment %} pagination {% endcomment %}
+         <div class="d-flex justify-content-center my-4">
+                {% if videos.has_other_pages %}
+                    <ul class="pagination ">
+                        {% if videos.has_previous %}
+                            <li class="page-item"><a class="page-link " href="?page=1">First</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ videos.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                        {% endif %}
+                        {% for i in videos.paginator.page_range %}
+                            {% if videos.number == i %}
+                                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only"></span></span></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if videos.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ videos.next_page_number }}">&raquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ videos.paginator.num_pages }}">Last</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </div>
+        
+        </div>
+        
         </div>
     </div>
 </div>
+
+
 
 
 {% endblock  %}

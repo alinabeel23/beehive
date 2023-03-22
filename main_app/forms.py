@@ -7,12 +7,15 @@ from django.contrib.auth.models import User
 class CreateChannelForm(forms.ModelForm):
     class Meta:
         model = Channel
-        fields = ['name', 'about', 'profilephoto']
+ 
+        fields = ['name', 'about', 'profilephoto', 'user']
+
 
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}), 
-            'about': forms.TextInput(attrs={'class': 'form-control'}), 
-            'profilephoto': forms.FileInput(attrs={'class': 'form-control'}), 
+            'name': forms.TextInput(attrs={'class': 'form-floating form-control bg-primary mb-3  form-text2', 'style':'border-radius: 4rem;' }), 
+            'about': forms.Textarea(attrs={'class': 'form-floating form-control bg-primary mb-3' , 'style':'border-radius: 2rem;' }), 
+            'profilephoto': forms.FileInput(attrs={'class': 'form-floating form-control bg-primary mb-3', 'style':'border-radius: 4rem;' }), 
+            'user': forms.Select(attrs={'class': 'form-select form-control bg-primary mb-3', 'style':'border-radius: 4rem;' }),
         }
 
 
@@ -110,7 +113,6 @@ class ResetPasswordForm(PasswordResetForm):
                 'class': 'form-control bg-primary text-light',
                 'style': 'border-radius: 4rem; color: white;'
             })
-
 
 
 

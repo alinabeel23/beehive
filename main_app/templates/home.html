@@ -39,16 +39,16 @@
     {% comment %} pagination {% endcomment %}
  <div class="d-flex justify-content-center my-4">
         {% if videos.has_other_pages %}
-            <ul class="pagination">
+            <ul class="pagination ">
                 {% if videos.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                    <li class="page-item"><a class="page-link " href="?page=1">First</a></li>
                     <li class="page-item"><a class="page-link" href="?page={{ videos.previous_page_number }}">&laquo;</a></li>
                 {% else %}
                     <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
                 {% endif %}
                 {% for i in videos.paginator.page_range %}
                     {% if videos.number == i %}
-                        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only"></span></span></li>
                     {% else %}
                         <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
                     {% endif %}
