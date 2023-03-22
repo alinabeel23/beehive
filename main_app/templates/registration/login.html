@@ -13,7 +13,8 @@
   {% csrf_token %}
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Username</label>
-    <input type="text" name="username" class="form-control bg-primary" id="exampleInputEmail1" aria-describedby="emailHelp" style="border-radius: 4rem;" autocomplete="username">  </div>
+    <input type="text" name="username" class="form-control bg-primary" id="exampleInputEmail1" aria-describedby="emailHelp" style="border-radius: 4rem;" autocomplete="username">  
+  </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
     <input type="password" name="password" class="form-control bg-primary" id="exampleInputPassword1" style="border-radius: 4rem;" autocomplete="current-password">
@@ -25,7 +26,9 @@
 </form>
 </div>
 </div>
-<a class="nav-link" href="{% url 'password_reset' %}" style="color: white;" >Forgot password? Reset it!</a>
+<br>
+<a class="nav-link" href="{% url 'password_reset' %}" style="color: white; font-weight: 200;" >Forgot password?<span style="font-weight: 500;"> Reset it!</span></a>
+<a class="nav-link" href="{% url 'signup' %}" style="color: white; font-weight: 200;" >Don't Have an Account?<span style="font-weight: 500;"> Sign Up!</span></a>
 </div>
 
 {% endblock %}

@@ -107,19 +107,29 @@ class VideoDetail(DetailView):
         video = self.object
 
         total_likes = video.likes.count()
-        print(total_likes) 
+        total_dislikes = video.dislikes.count()
+        print("total_likes", total_likes) 
 
         # to retrieve all comments associated with the current video
         comments = Comment.objects.filter(video=video)
         context['comments'] = comments
         context['form'] = CommentForm()
+        context['total_likes'] = total_likes
+        context['total_dislikes'] = total_dislikes
         return context
     
 
 def add_like(request, pk):
-    print(pk)
+
     video = get_object_or_404(Video, id=pk)
     ve = video.likes.add(request.user)
+ 
+    return redirect('videos_detail', pk=pk)
+
+def add_dislike(request, pk):
+
+    video = get_object_or_404(Video, id=pk)
+    ve = video.dislikes.add(request.user)
  
     return redirect('videos_detail', pk=pk)
 

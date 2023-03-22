@@ -34,6 +34,7 @@ urlpatterns = [
 
     # like and dislike
     path('videos/<int:pk>/like', views.add_like, name='like_video'),
+    path('videos/<int:pk>/dislike', views.add_dislike, name='dislike_video'),
 
     path('search/', views.search_results, name='search_results'),
 
