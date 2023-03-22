@@ -13,7 +13,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CreateChannelForm, CreateVideoForm, RegisterUserForm, CommentForm, ChangePasswordForm
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.core.paginator import Paginator
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -71,7 +71,7 @@ def change_password(request):
             return redirect('home')
     else:
         form = ChangePasswordForm(user=request.user)
-    return render(request, 'registration/change_password.html', {'form': form})
+    return render(request, 'commons/change-password.html', {'form': form})
 
 
 # Video class-based views
@@ -98,17 +98,32 @@ class VideoCreate(CreateView):
     model = Video
     form_class = CreateVideoForm
 
+
 class VideoDetail(DetailView):
     model = Video
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         video = self.object
+
+        total_likes = video.likes.count()
+        print(total_likes) 
+
         # to retrieve all comments associated with the current video
         comments = Comment.objects.filter(video=video)
         context['comments'] = comments
         context['form'] = CommentForm()
         return context
+    
+
+def add_like(request, pk):
+    print(pk)
+    video = get_object_or_404(Video, id=pk)
+    ve = video.likes.add(request.user)
+ 
+    return redirect('videos_detail', pk=pk)
+
+
     
 class VideoUpdate(LoginRequiredMixin, UpdateView):
     model = Video
@@ -218,7 +233,7 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
     def get_success_url(self):
-        return reverse('videos_detail', kwargs={'pk': self.object.video.pk})
+        return reverse('videos_detail', kwargs={'pk': self.object.video.id})
 
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
@@ -255,12 +270,17 @@ class SubscriberCreate(LoginRequiredMixin, CreateView):
 # Search Views
 
 def search_results(request):
-    query = request.GET.get('q')
-    videos = Video.search(query)
-    paginator = Paginator(videos, 10)
-    page = request.GET.get('page')
-    videos = paginator.get_page(page)
-    return render(request, 'search_results.html', {'videos': videos, 'query': query})
+    query = request.GET.get('query')  # Get the 'query' parameter from the request
+
+    if query:  # Ensure that 'query' is not None before performing the search
+        videos = Video.objects.filter(title__icontains=query)
+        paginator = Paginator(videos, 12)
+        page = request.GET.get('page')
+        videos = paginator.get_page(page)   
+    else:
+        videos = None
+    print(query)
+    return render(request, 'search_results.html', {'query': query, 'videos': videos})
 
 # ADDING PAGINATION
 def my_view(request):

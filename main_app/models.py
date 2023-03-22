@@ -23,12 +23,16 @@ class Video(models.Model):
     video = models.FileField(upload_to='main_app/static/uploads/', null=True, validators=[FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])])
     created_at = models.DateTimeField(default=django.utils.timezone.now)
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, related_name='video_like')
+    dislikes = models.ManyToManyField(User, related_name='video_dislike')
 
-    def get_absolute_url(self):
-        return reverse('videos_detail', kwargs={'pk': self.id})
-    
-    def __str__(self):
-        return self.title
+
+
+def get_absolute_url(self):
+    return reverse('videos_detail', kwargs={'pk': self.id})
+
+def __str__(self):
+    return self.title
     
 
 

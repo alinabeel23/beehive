@@ -1,6 +1,6 @@
 from django import forms
 from .models import Channel, Video, Comment, User
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, PasswordResetForm
 from django.contrib.auth.models import User
 
 
@@ -96,5 +96,21 @@ class ChangePasswordForm(PasswordChangeForm):
                 'class': 'form-control bg-primary text-light',
                 'style': 'border-radius: 4rem; color: white;'
             })
+
+
+class ResetPasswordForm(PasswordResetForm):
+    class Meta:
+        model = User
+        fields = ['old_password', 'new_password1', 'new_password2']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control bg-primary text-light',
+                'style': 'border-radius: 4rem; color: white;'
+            })
+
+
 
 

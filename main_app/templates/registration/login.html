@@ -3,15 +3,33 @@
 
 <h1>LOGIN PAGE</h1>
 
-<!-- Add the login form -->
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <!-- the form displays as p -->
-    {{ form.as_p }}
-    <input type="submit" class="btn btn-outline-light" value="login" style="border-radius: 4rem;">
-    <input type="hidden" name="next" value="{{ next }}">
-  </form>
-  <a class="nav-link" href="{% url 'password_reset' %}" style="color: white;" >Forgot password? Reset it!</a>
+<div class="container">
+<div class="row">
+  <div class="col-5">
 
+
+
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Username</label>
+    <input type="text" name="username" class="form-control bg-primary" id="exampleInputEmail1" aria-describedby="emailHelp" style="border-radius: 4rem;" autocomplete="username">  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" name="password" class="form-control bg-primary" id="exampleInputPassword1" style="border-radius: 4rem;" autocomplete="current-password">
+  </div>
+
+  <input type="submit" class="btn btn-outline-light" value="login" style="border-radius: 4rem;">
+  <input type="hidden" name="next" value="{{ next }}">
+
+</form>
+</div>
+</div>
+<a class="nav-link" href="{% url 'password_reset' %}" style="color: white;" >Forgot password? Reset it!</a>
+</div>
 
 {% endblock %}
+
+
+
+

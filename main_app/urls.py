@@ -28,8 +28,14 @@ urlpatterns = [
     path('channels/<int:channel_id>/subscribe/', views.subscribe, name='subscribe'),
 
     # Search URL
-    path('search/', views.search_results, name='search_results'),
 
     #pagination url
     path('videos/page/<int:page>/', views.VideoList.as_view(), name='videos_index'),
+
+    # like and dislike
+    path('videos/<int:pk>/like', views.add_like, name='like_video'),
+
+    path('search/', views.search_results, name='search_results'),
+
+
 ]

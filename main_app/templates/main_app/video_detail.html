@@ -60,9 +60,15 @@
 
 <div class="like-dislike">
     <!-- Adding like/dislike functionality-->
-    <button class="btn btn-success">Like</button>
-    <button class="btn btn-danger">Dislike</button>
+    <form action="{% url 'like_video' video.id %}" >
+      {% csrf_token %}
+      <button type="submit" name="like_id" value="{{ video.id }}" class="btn btn-success">Like</button> - {{ total_likes }} Likes
+    </form>
+    <form action="{% url 'like_video' video.id %}" >
+      {% csrf_token %}
+      <button type="submit" name="dislike_id" value="{{ video.id }}" class="btn btn-danger">Dislike</button> - {{ total_dislike }} Dislikes
+    </form>
+    
 </div>
-
 
 {% endblock %}

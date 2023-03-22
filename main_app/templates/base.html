@@ -47,8 +47,8 @@
 
 
                 </ul>
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2 bg-light" type="search" placeholder="Search" aria-label="Search" style="border-radius: 10rem; width: 25rem; color: white;">
+                <form class="d-flex" action="{% url 'search_results' %}" method="get">
+                  <input class="form-control me-2 bg-light" type="search" name="query" placeholder="Search" aria-label="Search" style="border-radius: 10rem; width: 25rem; color: #2f184b;">
                   <button class="btn btn-outline-light" type="submit" style="border-radius: 10rem;">Search</button>
                 </form>
               </div>
