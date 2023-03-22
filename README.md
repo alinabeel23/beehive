@@ -22,4 +22,29 @@ https://trello.com/b/N7rnN2fV/project-3-beehive
 
 * As a user, I want to sgin in, sign up, and sign out.
 * As a user, I want to be able to see all users uploaded Id.
+* As a user, I want to create a channel and upload videos.
+* As a user, I want to like, dislike, or comment a video.
+* As a user, I want to edit or delete the channel or the video.
+* As a user, I want to reset the password.
+
+## Technology used
+
+* Html
+* CSS
+* Java Script
+* Python
+* PostgreSQL 
+* Django
+
+## Unsolved Issue
+
+1. Create channel page should be not accessable after creating a channel, to solve this issue an if condition should be applied that once a channel is created the cannot be accessable.
+2. videos must be uploaded automaticaly to the user channel, this issue can be solved by giving the channel id as a defualt value for the channel.
+3. only the channel video owner can edit and delete, to solve this issue we can also create an if codition that check it the user id is the same as the user id of the channel creater.
+
+## Future Enhancement
+1. to make the App media friendly.
+2. add report function to report the video and the comment.
+3. to like and dislike comments.
+
 
