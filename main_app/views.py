@@ -114,6 +114,10 @@ class VideoCreate(CreateView):
     model = Video
     form_class = CreateVideoForm
 
+def increment_view_count(video_id):
+    video = get_object_or_404(Video, id=video_id)
+    video.views += 1
+    video.save()
 
 
 class VideoDetail(DetailView):

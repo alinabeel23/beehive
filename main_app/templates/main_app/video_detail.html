@@ -10,7 +10,41 @@
             <video autoplay="autoplay" controls="controls" preload="preload" style="height: 33rem; width: 50rem; background-color: black; margin-top: 3rem;">
                 <source src={% static video.video|cut:'main_app/static/' %} type="video/mp4">
             </video>
+            
+            <div class="row"> 
+                <div class="col">
             <h1>{{ video.title }}</h1>
+            </div>
+            <div class="col">
+
+                <div class="row">
+                    <!-- Adding like/dislike functionality-->
+                    <div class="col">
+                
+                   
+                    <form action="{% url 'like_video' video.id %}" >
+                      {% csrf_token %}
+                      <img src="https://previews.dropbox.com/p/thumb/AB0pEvcuXuAb3MHLKo_jK1uaJp9y2cGXIMORQsEryofJusUr2G2j_BX7zm8blvawX356BcXKheJz6fUQXubSJLRKJdXo3dyzqFYp9Lal2XDtLpXwf7ks1C2eQlqg4rLgwS2rz-CMAzoFI31MBNksTnafY5gtPkApaF-HeEJ-P3EWWb5BO-NfWTZb5bQZz_BXC5kmYlcQ4QDdjqSY7Eg1DsAKm0pjkey7Yexn5rQcHfzbo8mik1gqBfSgxHWDAGBUgydbqAb0LD4CRfPOvVNrlCzcJC2-nvfKHp6B2Pb3Qt7lrpQWQl5DYQvvkjJ1w3mDhTHyPNfA2WIFao9oZ6w9GMLHS6qMBXoGV_9-MR41fA2oFDCldUyDdd1efazsfbZstq4/p.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                
+                      <button type="submit" name="like_id" value="{{ video.id }}" class="btn btn-success">Like</button> - {{ total_likes }} Likes
+                    </form>
+                </div>
+                <div class="col">
+                
+                
+                   <br>
+                    <form action="{% url 'dislike_video' video.id %}" >
+                      {% csrf_token %}
+                      <img src="https://previews.dropbox.com/p/thumb/AB1RE37-3qiclP62qbCdBwHTk7g1AlBpTnQGKi06qPivpHNOQnV5ssGauSwm0S_BPIdE4kZeJ6_9nGq6FhqcjN6fm0hfLVk8nabEeDjiB0NH7wZl46iUoKrqJ_tbYg2urztBeS0mhD2Z_J3S6L33gJqjhzfgzu3k6iWLMNhCd7uyojfBFxOJjCiOdU6TKO8zxVYGXapahYEtLmej40aAMzWuFeQa8dYq_ls8vrD1gGLiR2oyc-MdFSu3GQcZ0PXdYY2pJzhEMVznJ8DHjb0I7dse5SIX0LC94SOjhrfLPZtCFRz4kSo4nv65Jxmcq8aPVSG0-cKphf9VjifowzRaeK6dtmlMEyjjwCwLwixQq0iQj4yLZ7cplew50q6w4IeAskI/p.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                
+                      <button type="submit" name="dislike_id" value="{{ video.id }}" class="btn btn-danger">Dislike</button> - {{ total_dislikes }} Dislikes
+                    </form>
+                </div>
+                </div>
+                
+            </div>
+        </div>
+            <p style="font-size: 14px; color: #fff ">{{ object.views }} views</p>
             <p>{{ video.description }}</p>
             <div class="card-action">
                 <a href="{% url 'videos_update' video.id %}">EDIT</a>
@@ -60,19 +94,5 @@
 
 
 
-
-<div class="like-dislike">
-    <!-- Adding like/dislike functionality-->
-    <form action="{% url 'like_video' video.id %}" >
-      {% csrf_token %}
-      <button type="submit" name="like_id" value="{{ video.id }}" class="btn btn-success">Like</button> - {{ total_likes }} Likes
-    </form>
-   <br>
-    <form action="{% url 'dislike_video' video.id %}" >
-      {% csrf_token %}
-      <button type="submit" name="dislike_id" value="{{ video.id }}" class="btn btn-danger">Dislike</button> - {{ total_dislikes }} Dislikes
-    </form>
-    
-</div>
 
 {% endblock %}

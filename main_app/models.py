@@ -12,6 +12,9 @@ class Channel(models.Model):
     profilephoto = models.ImageField(upload_to='main_app/static/uploads/', blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='channel')
 
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'pk': self.id})
+
     def __str__(self):
         return self.name
 
@@ -25,13 +28,14 @@ class Video(models.Model):
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='video_like')
     dislikes = models.ManyToManyField(User, related_name='video_dislike')
+    views = models.PositiveIntegerField(default=0)  # Added this line for views
 
 
-def get_absolute_url(self):
-    return reverse('videos_detail', kwargs={'pk': self.id})
+    def get_absolute_url(self):
+        return reverse('videos_detail', kwargs={'pk': self.id})
 
-def __str__(self):
-    return self.title
+    def __str__(self):
+        return self.title
     
 
 
