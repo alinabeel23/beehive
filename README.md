@@ -1,10 +1,12 @@
 # Project 3: Beehive
 
-## ERD
+## ERD:
+https://www.figma.com/file/hovVaZFcBeYKbK5xYSQDcj/BeeHive?node-id=503%3A997&t=YbMF0tCxubCxDpce-1
 
 ![erd](https://user-images.githubusercontent.com/123261074/227033729-fa146638-6b4b-4859-88ca-98e2da66f10f.png)
 
 ## Wireframe:
+https://www.figma.com/file/hovVaZFcBeYKbK5xYSQDcj/BeeHive?node-id=541%3A228&t=YbMF0tCxubCxDpce-1
 
 <img width="1352" alt="Screen Shot 2023-03-21 at 4 36 18 PM" src="https://user-images.githubusercontent.com/123261074/227033948-d8543381-709f-4b61-a5a5-6af89b7db624.png">
 
