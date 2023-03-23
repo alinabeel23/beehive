@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import views as auth_views
 from .models import Channel, Video, Subscriber, Comment
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormMixin, FormView
 from django.views.generic import ListView, DetailView
@@ -12,7 +12,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import CreateChannelForm, CreateVideoForm, RegisterUserForm, CommentForm, ChangePasswordForm
+from .forms import CreateChannelForm, CreateVideoForm, RegisterUserForm, CommentForm, ChangePasswordForm, EditProfileForm
 from django.http import JsonResponse, HttpResponseRedirect
 from django.core.paginator import Paginator
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -51,6 +51,22 @@ def signup(request):
     form = RegisterUserForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+# Update Profile
+def profile_edit(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'You have successfully signed up!')
+            return redirect('home')
+        else:
+            error_message = 'Invalid sign up - try again'
+    form = EditProfileForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/edit_profile.html', context)
 
 # View for the user's profile
 @login_required

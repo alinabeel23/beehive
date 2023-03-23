@@ -10,16 +10,20 @@
 {% endif %}
 
 
+<div class="cotatiner">
+    <div class="row">
+        <div class="form-group col-6">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+            
+                    {{ form.as_p }}
+            
+                <input type="submit" class="btn btn-outline-light" value="Upload" style="border-radius: 4rem;">
+            </form>
+        </div>
+    </div>
+</div>
 
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
 
-    <table>
-        {{ form.as_table }}
-    </table>
-
-    <input type="submit" class="btn btn-outline-light" value="Upload" style="border-radius: 4rem;">
-
-</form>
 
 {% endblock %}

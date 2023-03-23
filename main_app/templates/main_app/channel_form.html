@@ -10,13 +10,11 @@
 
 
     <div class="container">
-        <div class="form">
-            <div class="form-group">
+        <div class="row">
+            <div class="form-group col-6">
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <table class="form-control">
                         {{ form.as_p}}
-                    </table>
                     <input class="btn btn-outline-light" type="submit" value="Submit!" style="border-radius: 4rem;">
                 </form>
             </div>

@@ -1,6 +1,6 @@
 from django import forms
 from .models import Channel, Video, Comment, User
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, PasswordResetForm, UserChangeForm
 from django.contrib.auth.models import User
 
 
@@ -116,3 +116,25 @@ class ResetPasswordForm(PasswordResetForm):
 
 
 
+class EditProfileForm(UserChangeForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class':'form-control bg-primary text-light ::-webkit-input-placeholder',
+        'style': 'border-radius: 4rem; color:white; color: white;::placeholder {color: white;}',
+        }))
+    username = forms.CharField(max_length=20, widget=forms.TextInput(attrs={
+        'class':'form-control bg-primary text-light',
+        'style': 'border-radius: 4rem;',
+        }))
+    first_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={
+        'class':'form-control bg-primary text-light',
+        'style': 'border-radius: 4rem;',
+        }))
+    last_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={
+        'class':'form-control bg-primary text-light',
+        'style': 'border-radius: 4rem;',
+        }))
+
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name','email']

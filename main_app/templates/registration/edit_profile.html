@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+ {%block content%}
+
+ <h1>Edit Profile</h1>
+ {% if error_message %}
+ <p class="red-text">{{error_message}}</p>
+ {% endif %}
+
+
+ <div class="container">
+   <div class="row">
+      <div class="col-5">
+         <form method="post" action="{%url 'signup'%}">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-outline-light" value="Update Profile" style="border-radius: 4rem;">
+         </form>
+      </div>
+   </div>
+</div>
+ 
+ {% endblock %}
+
+
